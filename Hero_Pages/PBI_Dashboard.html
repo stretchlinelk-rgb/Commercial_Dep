@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power BI Dashboards | Searchline Commercial & Logistics Hub</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://unpkg.com/lucide/dist/lucide.js"></script>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    scroll-behavior: smooth;
+  }
+  main {
+    flex: 1;
+    padding: 2rem;
+  }
+  .dashboard-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  .dashboard-img {
+    border-radius: 0.5rem;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .dashboard-img:hover {
+    transform: scale(1.02);
+  }
+  /* Modal */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+  .modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    animation: fadeIn 0.3s ease;
+  }
+  .modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0.5rem;
+  }
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    border-radius: 9999px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 1.5rem;
+  }
+  .modal-close:hover {
+    background: rgba(0,0,0,0.8);
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95);}
+    to { opacity: 1; transform: scale(1);}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="bg-blue-900 text-white fixed w-full z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Searchline Commercial & Logistics Hub</h1>
+    <nav class="space-x-6">
+      <a href="../index.html" class="hover:text-blue-300">Home</a>
+      <!-- <a href="../track.html" class="hover:text-blue-300">Shipment Tracking</a> -->
+    </nav>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="mt-24 max-w-7xl mx-auto px-6">
+  <!-- <h2 class="text-3xl font-semibold text-gray-900 mb-8">Power BI Dashboards</h2> -->
+
+  <!-- Covering Plant Reports -->
+  <section class="mb-12">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">COVERING PLANT REPORTS</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">Courier Detail of CP and YD</h4>
+        <img src="../assets/DB/COURIER_DETAIL_2025.png" alt="Courier Detail 2025" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">This report shows 2025 related all courier details of covering plant and yarn dye plant.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">CP Sales Details Up To 2025</h4>
+        <img src="../assets/DB/CP_UPTO_2020.png" alt="Covering Plant Sales" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">This report displays sales details 2020 to 2025 for Covering Plant.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">CP Last month sales update</h4>
+        <img src="../assets/DB/COURIER_DETAIL_LAST_MONTH.png" alt="Other CP" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Additional covering plant report details here.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Yarn Dye Plant Reports -->
+  <section class="mb-12">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">YARN DYE PLANT REPORTS</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">YD Plant Sales Details</h4>
+        <img src="../assets/DB/YD_ALL_TIME.png" alt="Yarn Dye Sales" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">This report shows total sales details of yarn dye plant.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">YD Plant Last Month Sales Update</h4>
+        <img src="../assets/DB/YD_LAST_MONTH.png" alt="Yarn Dye Performance" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Performance report of Yarn Dye Plant.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">YD Enternal VS External</h4>
+        <img src="../assets/DB/YD_ENTERNAL_VS_EXTERNAL.png" alt="Yarn Dye Inventory" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Inventory details of yarn dye plant.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Elastic Plant Reports -->
+  <section class="mb-12">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">ELASTIC PLANT REPORTS</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">All Plant Sales Details</h4>
+        <img src="../assets/DB/BUDGET_UPDATE.png" alt="Elastic Plant Sales" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Overview of Elastic Plant sales.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courier Reports -->
+  <section class="mb-12">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">COURIER REPORTS</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">Courier Details 2025</h4>
+        <img src="../assets/DB/COURIER_DETAIL_2025.png" alt="Courier 1" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Details for Courier Report 1.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">Courier Details Last Month </h4>
+        <img src="../assets/DB/COURIER_DETAIL_LAST_MONTH.png" alt="Courier 2" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Details for Courier Report 2.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Export/Import Reports -->
+  <section class="mb-12">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">EXPORT / IMPORT REPORTS</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">Export Report</h4>
+        <img src="../assets/DB/EXPORT.png" alt="Export 1" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Details for Export Report 1.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+      <div class="dashboard-card">
+        <h4 class="text-xl font-semibold mb-4">Import Report</h4>
+        <img src="../assets/DB/IMPORT.png" alt="Import 1" class="dashboard-img">
+        <p class="text-gray-600 text-sm mb-3">Details for Import Report 1.</p>
+        <button class="flex items-center gap-2 mt-auto self-start bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+          <i class="h-4 w-4" data-lucide="unlock"></i> Request Access
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-blue-900 text-gray-200 mt-auto fixed w-full bottom-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 text-center border-t border-blue-700">
+    <p>© 2025 Searchline Commercial & Logistics Hub — All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div id="imageModal" class="modal">
+  <span class="modal-close" id="modalClose">&times;</span>
+  <div class="modal-content">
+    <img id="modalImg" src="" alt="Full View">
+  </div>
+</div>
+
+<script>
+  lucide.replace();
+
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const modalClose = document.getElementById('modalClose');
+
+// Select all dashboard images
+document.querySelectorAll('.dashboard-img').forEach(img => {
+  img.addEventListener('click', () => {
+    modalImg.src = img.src;      // Set modal image source
+    modal.classList.add('active'); // Show modal
+  });
+});
+
+// Close modal on close button click
+modalClose.addEventListener('click', () => {
+  modal.classList.remove('active');
+});
+
+// Close modal when clicking outside image
+modal.addEventListener('click', (e) => {
+  if(e.target === modal) modal.classList.remove('active');
+});
+
+// Close modal on Escape key
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') modal.classList.remove('active');
+});
+
+</script>
+
+</body>
+</html>

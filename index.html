@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>Searchline Commercial  &#x26;Logistics Hub</title>
+    <meta content="Internal logistics operations dashboard for commercial department - shipment tracking, performance analytics, and team management" name="description">
+    <link href="https://cdn.jsdelivr.net" rel="preconnect">
+    <link href="https://unpkg.com" rel="preconnect">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap);* {
+            font-family: Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp .6s ease-out forwards;
+            opacity: 0
+        }
+
+        .fade-in {
+            animation: fadeIn .6s ease-out forwards;
+            opacity: 0
+        }
+
+        .delay-100 {
+            animation-delay: .1s
+        }
+
+        .delay-200 {
+            animation-delay: .2s
+        }
+
+        .delay-300 {
+            animation-delay: .3s
+        }
+
+        .delay-400 {
+            animation-delay: .4s
+        }
+
+        .delay-500 {
+            animation-delay: .5s
+        }
+
+        .delay-600 {
+            animation-delay: .6s
+        }
+
+        :root {
+            --navy-primary: #002855;
+            --bg-light: #F0F2F5;
+            --border-gray: #DFE3E8;
+            --text-secondary: #637381;
+            --text-primary: #212B36;
+            --action-blue: #007BFF;
+            --status-green: #28A745;
+            --status-amber: #FFC107;
+            --status-red: #DC3545
+        }
+
+        .bg-navy {
+            background-color: var(--navy-primary)
+        }
+
+        .bg-light {
+            background-color: var(--bg-light)
+        }
+
+        .text-navy {
+            color: var(--navy-primary)
+        }
+
+        .text-secondary {
+            color: var(--text-secondary)
+        }
+
+        .text-primary {
+            color: var(--text-primary)
+        }
+
+        .text-action {
+            color: var(--action-blue)
+        }
+
+        .border-gray {
+            border-color: var(--border-gray)
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all .3s ease
+        }
+
+        .btn-primary:hover {
+            background-color: var(--action-blue)
+        }
+
+        .btn-secondary {
+            background-color: #fff;
+            color: var(--navy-primary);
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: 1px solid var(--navy-primary);
+            font-weight: 500;
+            transition: all .3s ease
+        }
+
+        .btn-secondary:hover {
+            background-color: lightblue;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(99,115,129,.1);
+            padding: 24px
+        }
+
+        .kpi-card {
+            background: #fff;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform .2s ease,box-shadow .2s ease
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,40,85,.15)
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .status-success {
+            background-color: #28a74520;
+            color: #28a745
+        }
+
+        .status-pending {
+            background-color: #ffc10720;
+            color: #d39e00
+        }
+
+        .status-delayed {
+            background-color: #dc354520;
+            color: #dc3545
+        }
+
+        .sidebar {
+            background-color: var(--navy-primary);
+            width: 240px;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0px;
+            z-index: 1000
+
+        }
+
+        .sidebar-link {
+            color: rgba(255,255,255,.8);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all .2s ease;
+            font-size: 14px;
+            font-weight: 500
+        }
+
+        .sidebar-link.active,.sidebar-link:hover {
+            background-color: var(--action-blue);
+            color: #fff
+        }
+
+        .main-content {
+            margin-left: 240px;
+            background-color: var(--bg-light);
+            min-height: 100vh
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform:translateX(-100%);
+                transition: transform .3s ease
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0)
+            }
+
+            .main-content {
+                margin-left: 0
+            }
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg,rgba(0,40,85,.95),rgba(0,123,255,.85)),url('assets/80339807-generated_540a99b876d45e7f.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed
+        }
+
+        .profile-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--border-gray);
+            object-fit: cover
+        }
+
+        .profile-photo.highlighted {
+            border: 2px solid var(--action-blue);
+            box-shadow: 0 0 0 4px rgba(0,123,255,.1)
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .data-table th {
+            background-color: var(--bg-light);
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-gray)
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-gray);
+            font-size: 14px
+        }
+
+        .data-table tr:hover {
+            background-color: var(--bg-light)
+        }
+
+        /* 🔹 News Line Styles */
+/*        .news-line {
+          position: fixed;        /* stays on screen when scrolling */
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 20px;
+          background: #86bff2;    /* light background so black text is visible */
+          overflow: hidden;
+          z-index: 2000;          /* make sure it’s above all content */
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #ccc; /* optional, clean divider look */
+        }
+*/
+/*        .news-scroll {
+          display: inline-block;
+          white-space: nowrap;
+          color: #000;            /* 🔹 black text color */
+          font-size: 12px;
+          font-weight: 500;
+          padding-left: 100%;
+          animation: scrollText 100s linear infinite;
+
+          /* start scrolled 10% ahead */
+          transform: translateX(-50%);
+        }
+
+        @keyframes scrollText {
+          0% {
+            transform: translateX(-25%); /* start 10% in */
+          }
+          100% {
+            transform: translateX(-60%); /* scroll full width of duplicated content */
+          }
+        }
+        */
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+    </style>
+    <button class="rounded-lg p-3 bg-navy fixed left-4 lg:hidden shadow-lg text-white top-4 z-[1100]" id="mobileMenuBtn">
+        <i class="h-6 w-6" data-lucide="menu"></i>
+    </button>
+    <aside class="sidebar" id="sidebar">
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-8">
+                <i class="text-white h-8 w-8" data-lucide="package"></i>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight text-white">Searchline</h1>
+                    <p class="text-xs opacity-80 text-white">Logistics Hub
+                </div>
+            </div>
+        </div>
+        <nav>
+            <a class="sidebar-link active" href="#home">
+                <i class="h-5 w-5" data-lucide="home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a class="sidebar-link" href="#team">
+                <i class="h-5 w-5" data-lucide="users"></i>
+                <span>Department &#x26;Team</span>
+            </a>
+            <a class="sidebar-link" href="#tracking">
+                <i class="h-5 w-5" data-lucide="truck"></i>
+                <span>Transport Tracking</span>
+            </a>
+            <a class="sidebar-link" href="#analytics">
+                <i class="h-5 w-5" data-lucide="bar-chart-3"></i>
+                <span>Performance Analytics</span>
+            </a>
+            <a class="sidebar-link" href="#shipments">
+                <i class="h-5 w-5" data-lucide="package-check"></i>
+                <span>Shipment Records</span>
+            </a>
+            <a class="sidebar-link" href="#news">
+                <i class="h-5 w-5" data-lucide="newspaper"></i>
+                <span>News &#x26; Updates</span>
+            </a>
+            <a class="sidebar-link" href="#contact">
+                <i class="h-5 w-5" data-lucide="mail"></i>
+                <span>Contact</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <!-- 🔹 Animated News Line -->
+ <!--        <div class="news-line">
+          <div class="news-scroll">
+            <span>
+              |  🚚 Latest Update: Port congestion easing in Colombo 
+              | ✈️ Air freight costs down by 6% this week 
+              | 🚢 New vessel schedules released for Q4 
+              | 💡 Efficiency program launching soon!
+              | ✈️ DHL to Invest $349 Million to Expand Logistics in Africa
+              | 💡 US reviews China’s compliance with 2020 trade pact
+            </span>
+            <span>
+              | 🚚 Latest Update: Port congestion easing in Colombo 
+              | ✈️ Air freight costs down by 6% this week 
+              | 🚢 New vessel schedules released for Q4 
+              | 💡 Efficiency program launching soon!
+              | 🚢 DHL to Invest $349 Million to Expand Logistics in Africa
+              | ✈️ US reviews China’s compliance with 2020 trade pact
+            </span>
+            <span>
+              |  🚚 Latest Update: Port congestion easing in Colombo 
+              | ✈️ Air freight costs down by 6% this week 
+              | 🚢 New vessel schedules released for Q4 
+              | 💡 Efficiency program launching soon!
+              | ✈️ DHL to Invest $349 Million to Expand Logistics in Africa
+              | 💡 US reviews China’s compliance with 2020 trade pact
+            </span>
+            <span>
+              | 🚚 Latest Update: Port congestion easing in Colombo 
+              | ✈️ Air freight costs down by 6% this week 
+              | 🚢 New vessel schedules released for Q4 
+              | 💡 Efficiency program launching soon!
+              | 🚢 DHL to Invest $349 Million to Expand Logistics in Africa
+              | ✈️ US reviews China’s compliance with 2020 trade pact
+            </span>
+
+          </div>
+        </div> -->
+
+
+
+        <section class="px-8 text-white hero-section py-20" id="home">
+            <div class="max-w-7xl mx-auto">
+                <div class="fade-in-up">
+                    <h1 class="md:text-5xl font-bold mb-4 text-4xl">Commercial &#x26; Logistics Operations Dashboard</h1>
+                    <p class="mb-8 max-w-2xl opacity-90 text-xl">Centralized hub for shipment tracking, performance analytics, and operational excellence
+                </div>
+                <div class="fade-in-up delay-200 gap-4 grid grid-cols-1 md:grid-cols-4 mt-12">
+
+              <!-- 🔹 Track Shipment -->
+              <a href="Hero_Pages/Track_Shipment.html" 
+                 class="flex items-center gap-2 btn-secondary bg-white hover:bg-opacity-90 justify-center px-4 py-3 rounded-lg shadow-md transition">
+                <i class="h-5 w-5" data-lucide="search"></i>
+                Track Shipment
+              </a>
+
+              <!-- 🔹 Update Record -->
+              <a href="Hero_Pages/News_Page.html" 
+                 class="flex items-center gap-2 btn-secondary bg-white hover:bg-opacity-90 justify-center px-4 py-3 rounded-lg shadow-md transition">
+                <i class="h-5 w-5" data-lucide="edit"></i>
+                New & Announcements
+              </a>
+
+              <!-- 🔹 Power BI Dashboard -->
+              <a href="Hero_Pages/PBI_Dashboard.html" 
+                 class="flex items-center gap-2 btn-secondary bg-white hover:bg-opacity-90 justify-center px-4 py-3 rounded-lg shadow-md transition">
+                <i class="h-5 w-5" data-lucide="line-chart"></i>
+                Power BI Dashboard
+              </a>
+
+              <!-- 🔹 Team Updates -->
+              <a href="Hero_Pages/Calculation.html" 
+                 class="flex items-center gap-2 btn-secondary bg-white hover:bg-opacity-90 justify-center px-4 py-3 rounded-lg shadow-md transition">
+                <i class="h-5 w-5" data-lucide="bell"></i>
+                Calculation
+              </a>
+
+            </div>
+
+            </div>
+        </section>
+        <section class="px-8 py-12">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="fade-in-up mb-6 font-semibold text-primary text-2xl"> Operations Overview - Week 43</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-4">
+                    <div class="fade-in-up delay-100 kpi-card">
+                        <div class="flex items-start mb-3 justify-between">
+                            <div class="rounded-lg p-3 bg-blue-100">
+                                <i class="text-action h-6 w-6" data-lucide="package"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-navy">$ 2.87 Million</span>
+                        </div>
+                        <h3 class="text-secondary text-sm font-medium tracking-wide uppercase">Total Achieved Salse Value</h3>
+                        <p class="text-secondary text-xs mt-2">↑ 1.56M to be achieved value
+                    </div>
+                    <div class="fade-in-up delay-200 kpi-card">
+                        <div class="flex items-start mb-3 justify-between">
+                            <div class="rounded-lg p-3 bg-green-100">
+                                <i class="h-6 w-6" data-lucide="truck" style="color:#28a745"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-navy">LKR 1,488</span>
+                        </div>
+                        <h3 class="text-secondary text-sm font-medium tracking-wide uppercase">Transport Cost</h3>
+                        <p class="text-secondary text-xs mt-2">Only one aditional vehical 😊
+                    </div>
+                    <div class="fade-in-up delay-300 kpi-card">
+                        <div class="flex items-start mb-3 justify-between">
+                            <div class="rounded-lg p-3 bg-amber-100">
+                                <i class="h-6 w-6" data-lucide="file-text" style="color:#ffc107"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-navy">486 INV</span>
+                        </div>
+                        <h3 class="text-secondary text-sm font-medium tracking-wide uppercase">Pending POD Entries</h3>
+                        <p class="text-secondary text-xs mt-2">Total dispatched count 2312
+                    </div>
+                    <div class="fade-in-up delay-400 kpi-card">
+                        <div class="flex items-start mb-3 justify-between">
+                            <div class="rounded-lg p-3 bg-purple-100">
+                                <i class="h-6 w-6 text-purple-600" data-lucide="ship"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-navy">22 SHIP</span>
+                        </div>
+                        <h3 class="text-secondary text-sm font-medium tracking-wide uppercase">IMPORT SHIPMENT UPDATES</h3>
+                        <p class="text-secondary text-xs mt-2">45% FOB , 10 LCL , 75% COVERING
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-8 py-12 bg-white" id="team">
+            <div class="max-w-7xl mx-auto">
+                <div class="fade-in-up mb-12">
+                    <h2 class="text-primary font-semibold text-2xl mb-4">Commercial Department</h2>
+                    <p class="text-secondary text-base leading-relaxed max-w-3xl">Our mission is to ensure seamless logistics operations across all plants and transport modes. We manage end-to-end supply chain visibility, optimize freight costs, and maintain exceptional on-time delivery performance for our global operations.
+                </div>
+                <h3 class="fade-in-up delay-100 font-semibold mb-6 text-primary text-xl">Leadership Team</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-3">
+                    <div class="fade-in-up card delay-200">
+
+                        <div class="flex items-start gap-4">
+                            <a href="Profiles/DishanW.html">
+                            <img alt="Dishan Weragalage, DGM Supply Chain" class="profile-photo highlighted" height="80" src="assets/DishanW.png" width="80">
+                            <div class="flex-1">
+                                <h4 class="text-primary font-semibold text-base">Dishan Weragalage</h4>
+                                <p class="text-action mb-2 text-sm">DGM Supply Chain
+                                <p class="text-secondary text-xs mb-3">Leads overall supply chain operations.
+                                <div class="flex gap-2">
+                                    <a href="Profiles/DishanW.html">
+                                    <a class="text-action hover:underline text-xs"a href="Profiles/DishanW.html">
+                                        <i class="h-3 inline w-3" data-lucide="mail"></i>
+                                    </a>
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/DishanW.html">
+                                        <i class="h-3 inline w-3" data-lucide="phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in-up card delay-300">
+                        <div class="flex items-start gap-4">
+                            <a href="Profiles/harshaP.html">
+                            <img alt="Harsha Perera, Commercial Manager" class="profile-photo" height="80" src="assets/HarshaP.png" width="80">
+                            <div class="flex-1">
+                                <h4 class="text-primary font-semibold text-base">Harsha Perera</h4>
+                                <p class="text-action mb-2 text-sm">Commercial Manager
+                                <p class="text-secondary text-xs mb-3">Oversees all commercial activities.
+                                <div class="flex gap-2">
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/harshaP.html">
+                                        <i class="h-3 inline w-3" data-lucide="mail"></i>
+                                    </a>
+                                    <a class="text-action hover:underline text-xs"a href="Profiles/harshaP.html">
+                                        <i class="h-3 inline w-3" data-lucide="phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in-up card delay-400">
+                        <div class="flex items-start gap-4">
+                            <a href="Profiles/SameeraA.html">
+                            <img alt="Sameera Anjana, Senior Executive - Transport" class="profile-photo" height="80" src="assets/SameeraA.png" width="80">
+                            <div class="flex-1">
+                                <h4 class="text-primary font-semibold text-base">Sameera Anjana</h4>
+                                <p class="text-action mb-2 text-sm">Senior Executive - DataTex ERP
+                                <p class="text-secondary text-xs mb-3">Manages DataTex ERP system side.
+                                <div class="flex gap-2">
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/SameeraA.html">
+                                        <i class="h-3 inline w-3" data-lucide="mail"></i>
+                                    </a>
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/SameeraA.html">
+                                        <i class="h-3 inline w-3" data-lucide="phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in-up card delay-400">
+                        <div class="flex items-start gap-4">
+                            <a href="Profiles/SachinthaJ.html">
+                            <img alt="Sachintha Jayasuriya, Senior Executive - Transport" class="profile-photo" height="80" src="assets/SachinthaJ.png" width="80">
+                            <div class="flex-1">
+                                <h4 class="text-primary font-semibold text-base">Sachintha Jayasuriya</h4>
+                                <p class="text-action mb-2 text-sm">Senior Executive - Import
+                                <p class="text-secondary text-xs mb-3"> Handles overall import process
+                                <div class="flex gap-2">
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/SachinthaJ.html">
+                                        <i class="h-3 inline w-3" data-lucide="mail"></i>
+                                    </a>
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/SachinthaJ.html">
+                                        <i class="h-3 inline w-3" data-lucide="phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="fade-in-up card delay-400">
+                        <div class="flex items-start gap-4">
+                            <a href="Profiles/SusithF.html">
+                            <img alt="Susith Fernando, Executive - Transport" class="profile-photo" height="80" src="assets/SusithF.png" width="80">
+                            <div class="flex-1">
+                                <h4 class="text-primary font-semibold text-base">Susith Fernando</h4>
+                                <p class="text-action mb-2 text-sm">Executive - Transport
+                                <p class="text-secondary text-xs mb-3">Manages daily transport operations
+                                <div class="flex gap-2">
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/SusithF.html">
+                                        <i class="h-3 inline w-3" data-lucide="mail"></i>
+                                    </a>
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/SusithF.html">
+                                        <i class="h-3 inline w-3" data-lucide="phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in-up card delay-400">
+                        <div class="flex items-start gap-4">
+                            <a href="Profiles/DuminduR.html">
+                            <img alt="Dumindu Rashmika, Executive - Export" class="profile-photo" height="80" src="assets/DuminduR.png" width="80">
+                            <div class="flex-1">
+                                <h4 class="text-primary font-semibold text-base">Dumindu Rashmika</h4>
+                                <p class="text-action mb-2 text-sm"> Executive - Export
+                                <p class="text-secondary text-xs mb-3">Handles overall export process
+                                <div class="flex gap-2">
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/DuminduR.html">
+                                        <i class="h-3 inline w-3" data-lucide="mail"></i>
+                                    </a>
+                                    <a class="text-action hover:underline text-xs" a href="Profiles/DuminduR.html">
+                                        <i class="h-3 inline w-3" data-lucide="phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </section>
+        <section class="px-8 py-12" id="tracking">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="fade-in-up mb-6 font-semibold text-primary text-2xl">Transport &#x26; Tracking Center</h2>
+                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <div class="fade-in-up card delay-100">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="text-action h-6 w-6" data-lucide="truck"></i>
+                            <h3 class="text-primary font-semibold text-lg">Lorry Tracking</h3>
+                        </div>
+                        <p class="text-secondary text-sm mb-4">Real-time GPS tracking for all land vehicles</p>
+                        <a href="https://gps.trackmycar.lk/index.php" target="_blank">
+                            <button class="btn-primary w-full">View Live Fleet Map</button>
+                        </a>
+                    </div>
+                    <div class="fade-in-up card delay-200">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="text-action h-6 w-6" data-lucide="plane"></i>
+                            <h3 class="text-primary font-semibold text-lg">Courier Tracking</h3>
+                        </div>
+                        <p class="text-secondary text-sm mb-4">Track DHL, FedEx, Aramex shipments by AWB</p>
+                        <!-- <input class="text-sm border border-gray px-4 rounded-lg w-full mb-3 py-2" placeholder="Enter AWB number"> -->
+                        <a href="Hero_Pages/Track_Shipment.html">
+                            <button class="btn-primary w-full">Track Shipment</button>                           
+                        </a>
+                    </div>
+                    <div class="fade-in-up card delay-300">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="text-action h-6 w-6" data-lucide="ship"></i>
+                            <h3 class="text-primary font-semibold text-lg">Vessel Tracking</h3>
+                        </div>
+                        <p class="text-secondary text-sm mb-4">Monitor vessel positions and ETAs globally</p>
+                        <a href="https://www.marinetraffic.com/en/ais/home/centerx:-15.6/centery:17.1/zoom:4" target="_blank">
+                            <button class="btn-primary w-full">View Marine Traffic</button>                            
+
+                        </a>
+                    </div>
+                    <div class="fade-in-up card delay-400">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="text-action h-6 w-6" data-lucide="plane-takeoff"></i>
+                            <h3 class="text-primary font-semibold text-lg">Flight Tracking</h3>
+                        </div>
+                        <p class="text-secondary text-sm mb-4">Live air cargo flight status and schedules</p>
+                        <a href="https://www.flightradar24.com/" target="_blank">
+                            <button class="btn-primary w-full">View Flight Radar</button>
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="px-8 py-12 bg-white" id="analytics">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center fade-in-up justify-between mb-6">
+                    <h2 class="text-primary font-semibold text-2xl">Performance Analytics</h2>
+
+                    <a href="Hero_Pages/PBI_Dashboard.html">
+                    <button class="flex items-center gap-2 btn-secondary">
+                        <i class="h-4 w-4" data-lucide="external-link"></i>
+                        Open Full Dashboard
+                    </button>
+                    </a>
+                    
+                </div>
+                <div class="fade-in-up card delay-100">
+                    <img alt="Performance Dashboard Visualization" class="rounded-lg w-full mb-4" height="768" src="assets/48847a04-generated_35ae0afb4d92a362.png" width="1024" decoding="async" loading="lazy">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 mt-6">
+                        <div>
+                            <p class="text-secondary text-xs mb-1 tracking-wide uppercase">Monthly Shipment Volume
+                            <p class="text-2xl font-bold text-navy"> 2,710 KG
+                            <p class="text-xs mt-1 text-green-600">↑ 2.3% vs last month
+                        </div>
+                        <div>
+                            <p class="text-secondary text-xs mb-1 tracking-wide uppercase">On-Time Delivery Rate
+                            <p class="text-2xl font-bold text-navy">96.2%
+                            <p class="text-xs mt-1 text-green-600">↑ 6.1% improvement
+                        </div>
+                        <div>
+                            <p class="text-secondary text-xs mb-1 tracking-wide uppercase">Average Freight Cost
+                            <p class="text-2xl font-bold text-navy">$ Pending
+                            <p class="text-xs mt-1 text-red-600">↓ Pending
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="px-8 py-12" id="shipments">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center fade-in-up justify-between mb-6">
+                    <h2 class="text-primary font-semibold text-2xl">Recent Shipment Records</h2>
+                    <a href="https://www.appsheet.com/start/4e0888d8-3bda-4856-8e25-fb654aaf2621" target="_blank">
+                    <button class="flex items-center gap-2 btn-primary">
+                        <i class="h-4 w-4" data-lucide="database"></i>
+                        More Details
+                    </button>
+                    </a>
+                </div>
+                <div class="fade-in-up card delay-100 overflow-x-auto">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice No
+                                <th>Dispatch Date
+                                <th>Customer
+                                <th>Mode
+                                <th>Plant
+                                <th>Status
+                                <th>
+                                    POD Date
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-navy font-medium">2025-CP-05197
+                                            <td>10/23/2025
+                                            <td>DELTA TEXTILE EGYPT S.A.E.
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <i class="text-action h-4 w-4" data-lucide="ship"></i>
+                                                    Sea Freight
+                                                </div>
+                                            <td>CP
+                                            <td>
+                                                <span class="status-badge status-success">On The Way</span>
+                                            <td>
+                                                Pending
+                                                <tr>
+                                                    <td class="text-navy font-medium">2025-CP-05095
+                                                    <td>10/17/2025
+                                                    <td>WILDERNESS WEAR AUSTRALIA
+                                                    <td>
+                                                        <div class="flex items-center gap-2">
+                                                            <i class="text-action h-4 w-4" data-lucide="plane"></i>
+                                                            Air Freight
+                                                        </div>
+                                                    <td>CP
+                                                    <td>
+                                                        <span class="status-badge status-pending">In Transit</span>
+                                                    <td>
+                                                        Pending
+                                                        <tr>
+                                                            <td class="text-navy font-medium">2025-CP-05080
+                                                            <td>10/17/2025
+                                                            <td>ANSELL VINA CO.,LTD
+                                                            <td>
+                                                                <div class="flex items-center gap-2">
+                                                                    <i class="text-action h-4 w-4" data-lucide="truck"></i>
+                                                                    Land Transport
+                                                                </div>
+                                                            <td>YD
+                                                            <td>
+                                                                <span class="status-badge status-delayed">POD Pending</span>
+                                                            <td>
+                                                                Pending
+                                                                <tr>
+                                                                    <td class="text-navy font-medium">2025-CP-04928
+                                                                    <td>10/10/2025
+                                                                    <td>JM FABRICS LTD
+                                                                    <td>
+                                                                        <div class="flex items-center gap-2">
+                                                                            <i class="text-action h-4 w-4" data-lucide="package"></i>
+                                                                            Courier
+                                                                        </div>
+                                                                    <td>CP
+                                                                    <td>
+                                                                        <span class="status-badge status-success">Delivered</span>
+                                                                    <td>10/12/2025
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="px-8 py-12 bg-white" id="news">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="fade-in-up mb-6 font-semibold text-primary text-2xl">Supply Chain News &#x26;Updates</h2>
+
+<!--                 <button class="flex items-center gap-2 btn-primary mb-6">
+                        <i class="h-4 w-4" data-lucide="database"></i>
+                        More Details
+                    </button> -->
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="fade-in-up card delay-100">
+                        <div class="flex items-start mb-3 gap-3">
+                            <div class="p-2 rounded bg-blue-100">
+                                <i class="text-action h-5 w-5" data-lucide="globe"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-primary font-semibold text-base mb-2">DHL to Invest $349 Million to Expand Logistics in Africa</h3>
+                                <p class="text-secondary text-sm mb-3">Most of DHL’s Africa Operations Are in South Africa, Egypt and Kenya
+                                <p class="text-secondary text-xs">Source: Bloomberg News • October 15, 2025 10:00 AM
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in-up card delay-200">
+                        <div class="flex items-start mb-3 gap-3">
+                            <div class="p-2 rounded bg-green-100">
+                                <i class="h-5 w-5" data-lucide="check-circle" style="color:#28a745"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-primary font-semibold text-base mb-2">Vessels Clog China Ports as Fees on US Ships Begin</h3>
+                                <p class="text-secondary text-sm mb-3">Prolonged Backups Could Hit Crude Oil, Iron Ore and More in Global Supply Chain.
+                                <p class="text-secondary text-xs"> Source: Bloomberg News | October 21, 2025 8:40 AM
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in-up card delay-300">
+                        <div class="flex items-start mb-3 gap-3">
+                            <div class="p-2 rounded bg-amber-100">
+                                <i class="h-5 w-5" data-lucide="alert-triangle" style="color:#ffc107"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-primary font-semibold text-base mb-2">US Blocks Global Carbon Tax on Ships for Now</h3>
+                                <p class="text-secondary text-sm mb-3">Singapore port experiencing 2-3 day delays. Consider alternative routing via Port Klang.
+                                <p class="text-secondary text-xs">Source: Bloomberg News | October 17, 2025 10:45 AM
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in-up card delay-400">
+                        <div class="flex items-start mb-3 gap-3">
+                            <div class="p-2 rounded bg-purple-100">
+                                <i class="h-5 w-5 text-purple-600" data-lucide="file-text"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-primary font-semibold text-base mb-2">Colombo Port congestion deepens as major shipping lines bypass calls</h3>
+                                <p class="text-secondary text-sm mb-3">A report by global logistics firm Kuehne+Nagel attributed the disruption to severe yard congestion, a surge in transshipment volumes, and unfavourable weather conditions.
+                                <p class="text-secondary text-xs">Source: Maritime Gateway | October 24, 2025
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="px-8 py-12" id="contact">
+            <div class="max-w-7xl mx-auto">
+                <div class="fade-in-up card">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h2 class="text-primary font-semibold text-2xl mb-4">Contact Commercial Department</h2>
+                            <p class="text-secondary text-base mb-6">For logistics queries, shipment support, or operational assistance, reach out to our team.
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <i class="text-action h-5 w-5 mt-1" data-lucide="mail"></i>
+                                    <div>
+                                        <p class="text-primary font-medium">Email</p>
+                                        <a class="text-action hover:underline" href="#" rel="noopener noreferrer" target="_blank">
+                                            <span class="__cf_email__" data-cfemail="b7d4d8dadad2c5d4ded6dbf7c4d2d6c5d4dfdbded9d299d4d8da">[email &#160;protected]</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="text-action h-5 w-5 mt-1" data-lucide="phone"></i>
+                                    <div>
+                                        <p class="text-primary font-medium">Hotline</p>
+                                        <a class="text-action hover:underline" href="tel:+94112345678" rel="noopener noreferrer" target="_blank">+94 11 234 5678</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="text-action h-5 w-5 mt-1" data-lucide="map-pin"></i>
+                                    <div>
+                                        <p class="text-primary font-medium">Location
+                                        <p class="text-secondary">
+                                            Searchline Logistics Center<br>Biyagama, Sri Lanka
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-primary font-semibold text-lg mb-4">Quick Support Request</h3>
+                            <div class="space-y-4">
+                                <input class="text-sm border border-gray px-4 rounded-lg w-full py-3" placeholder="Your Name">
+                                <input class="text-sm border border-gray px-4 rounded-lg w-full py-3" placeholder="Email Address" type="email">
+                                <select class="text-secondary text-sm border border-gray px-4 py-3 rounded-lg w-full">
+                                    <option>Select Query Type
+                                    <option>Shipment Tracking
+                                    <option>POD Issue
+                                    <option>Documentation
+                                    <option>General Inquiry
+                                </select>
+                                <textarea class="text-sm border border-gray px-4 rounded-lg w-full py-3" placeholder="Message" rows="4"></textarea>
+                                <button class="btn-primary w-full">Submit Request</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="px-8 text-white bg-navy py-8">
+            <div class="max-w-7xl mx-auto text-center">
+                <div class="flex items-center gap-2 justify-center mb-4">
+                    <i class="h-6 w-6" data-lucide="package"></i>
+                    <span class="text-lg font-semibold">Searchline Logistics Hub</span>
+                </div>
+                <p class="text-sm opacity-80">© 2025 Searchline Commercial Department. Internal Operations Portal.
+            </div>
+        </footer>
+    </main>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        lucide.createIcons();
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn")
+          , sidebar = document.getElementById("sidebar");
+        mobileMenuBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("mobile-open")
+        }
+        ),
+        document.querySelectorAll(".sidebar-link").forEach(e => {
+            e.addEventListener("click", t => {
+                t.preventDefault();
+                const r = e.getAttribute("href")
+                  , o = document.querySelector(r);
+                o && (o.scrollIntoView({
+                    behavior: "smooth"
+                }),
+                document.querySelectorAll(".sidebar-link").forEach(e => e.classList.remove("active")),
+                e.classList.add("active"),
+                sidebar.classList.remove("mobile-open"))
+            }
+            )
+        }
+        );
+        const observerOptions = {
+            threshold: .1,
+            rootMargin: "0px 0px -50px 0px"
+        }
+          , observer = new IntersectionObserver(e => {
+            e.forEach(e => {
+                e.isIntersecting && (e.target.style.opacity = "1",
+                e.target.style.transform = "translateY(0)")
+            }
+            )
+        }
+        ,observerOptions);
+        document.querySelectorAll(".fade-in-up, .fade-in").forEach(e => {
+            observer.observe(e)
+        }
+        )
+    </script>

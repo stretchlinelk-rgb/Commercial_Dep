@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track Shipment | Searchline Commercial & Logistics Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide/dist/lucide.js"></script>
+  <style>
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+    }
+    main {
+      flex: 1;
+      padding: 2rem;
+    }
+    .tracking-card {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      padding: 1.5rem;
+      width: 100%;
+    }
+    .tracking-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    input[type="text"] {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      width: 100%;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="bg-blue-900 text-white fixed w-full z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Searchline Commercial & Logistics Hub</h1>
+      <nav class="space-x-6">
+        <a href="../index.html" class="hover:text-blue-300">Home</a>
+        <!-- <a href="../index.html" class="hover:text-blue-300">Team</a> -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="mt-24 max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl font-semibold text-gray-900 mb-8">Courier & Shipment Tracking</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- DHL -->
+      <div class="tracking-card flex flex-col justify-between">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">DHL</h3>
+        <p class="text-gray-600 text-sm mb-2">Enter your DHL tracking number Enter your DHL tracking number Enter your DHL tracking number:</p>
+        <input type="text" id="dhlInput" placeholder="Enter tracking number">
+        <button onclick="trackCourier('dhl')" class="bg-blue-900 text-white px-4 py-2 rounded-md text-center hover:bg-blue-800 transition">Track</button>
+      </div>
+
+      <!-- FEDEX -->
+      <div class="tracking-card flex flex-col justify-between">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">FEDEX</h3>
+        <p class="text-gray-600 text-sm mb-2">Enter your FedEx tracking number:</p>
+        <input type="text" id="fedexInput" placeholder="Enter tracking number">
+        <button onclick="trackCourier('fedex')" class="bg-blue-900 text-white px-4 py-2 rounded-md text-center hover:bg-blue-800 transition">Track</button>
+      </div>
+
+      <!-- ARAMEX -->
+      <div class="tracking-card flex flex-col justify-between">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">ARAMEX</h3>
+        <p class="text-gray-600 text-sm mb-2">Enter your Aramex tracking number:</p>
+        <input type="text" id="aramexInput" placeholder="Enter tracking number">
+        <button onclick="trackCourier('aramex')" class="bg-blue-900 text-white px-4 py-2 rounded-md text-center hover:bg-blue-800 transition">Track</button>
+      </div>
+
+      <!-- UPS -->
+      <div class="tracking-card flex flex-col justify-between">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">UPS</h3>
+        <p class="text-gray-600 text-sm mb-2">Enter your UPS tracking number:</p>
+        <input type="text" id="upsInput" placeholder="Enter tracking number">
+        <button onclick="trackCourier('ups')" class="bg-blue-900 text-white px-4 py-2 rounded-md text-center hover:bg-blue-800 transition">Track</button>
+      </div>
+
+      <!-- Flight Tracking -->
+      <div class="tracking-card flex flex-col justify-between">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Flight Tracking</h3>
+        <p class="text-gray-600 text-sm mb-2">Enter your flight number:</p>
+        <input type="text" id="flightInput" placeholder="Enter flight number">
+        <button onclick="trackCourier('flight')" class="bg-blue-900 text-white px-4 py-2 rounded-md text-center hover:bg-blue-800 transition">Track</button>
+      </div>
+
+      <!-- Vessel Tracking -->
+      <div class="tracking-card flex flex-col justify-between">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Vessel Tracking</h3>
+        <p class="text-gray-600 text-sm mb-2">Enter your vessel number:</p>
+        <input type="text" id="vesselInput" placeholder="Enter vessel number">
+        <button onclick="trackCourier('vessel')" class="bg-blue-900 text-white px-4 py-2 rounded-md text-center hover:bg-blue-800 transition">Track</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+<!--   <footer class="bg-blue-900 text-gray-200 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-center border-t border-blue-700">
+      <p>© 2025 Searchline Commercial & Logistics Hub — All Rights Reserved.</p>
+    </div>
+  </footer>
+ -->
+    <!-- FOOTER -->
+<!--   <footer class="bg-blue-900 text-gray-200 mt-auto w-full fixed bottom-0 left-0">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-center border-t border-blue-700">
+      <p>© 2025 Searchline Commercial & Logistics Hub — All Rights Reserved.</p>
+    </div>
+  </footer> -->
+
+  <!-- FOOTER -->
+<footer class="bg-blue-900 text-gray-200 mt-auto fixed w-full bottom-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 text-center border-t border-blue-700">
+    <p>© 2025 Searchline Commercial & Logistics Hub — All Rights Reserved.</p>
+  </div>
+</footer>
+
+  <script>
+    lucide.replace();
+
+    function trackCourier(type) {
+      let url = '';
+      let number = '';
+      switch(type) {
+        case 'dhl':
+          number = document.getElementById('dhlInput').value.trim();
+          url = `https://www.dhl.com/lk-en/home/tracking.html?tracking-id=${encodeURIComponent(number)}`;
+          break;
+        case 'fedex':
+          number = document.getElementById('fedexInput').value.trim();
+          url = `https://www.fedex.com/fedextrack/?trknbr=${encodeURIComponent(number)}`;
+          break;
+        case 'aramex':
+          number = document.getElementById('aramexInput').value.trim();
+          url = `https://www.aramex.com/track/results?ShipmentNumber=${encodeURIComponent(number)}`;
+          break;
+        case 'ups':
+          number = document.getElementById('upsInput').value.trim();
+          url = `https://www.ups.com/track?tracknum=${encodeURIComponent(number)}`;
+          break;
+        case 'flight':
+          number = document.getElementById('flightInput').value.trim();
+          url = `https://www.flightradar24.com/${encodeURIComponent(number)}`;
+          break;
+        case 'vessel':
+          number = document.getElementById('vesselInput').value.trim();
+          url = `https://www.marinetraffic.com/en/ais/details/ships/mmsi:${encodeURIComponent(number)}`;
+          break;
+      }
+      if(number) {
+        window.open(url, '_blank');
+      } else {
+        alert('Please enter a tracking number or flight/vessel number.');
+      }
+    }
+  </script>
+
+</body>
+</html>

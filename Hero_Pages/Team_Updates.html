@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supply Chain News & Updates | Searchline</title>
+  <meta name="description" content="Latest supply chain and logistics news from Searchline Commercial & Logistics Hub." />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+    }
+
+    header, footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 50;
+    }
+
+    header {
+      top: 0;
+    }
+
+    footer {
+      bottom: 0;
+    }
+
+    main {
+      margin-top: 72px; /* header height */
+      margin-bottom: 72px; /* footer height */
+      overflow-y: auto;
+      min-height: calc(100vh - 144px);
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔹 FIXED HEADER -->
+  <header class="bg-blue-900 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Searchline Commercial & Logistics Hub</h1>
+      <nav class="space-x-6">
+        <a href="../index.html" class="hover:text-blue-400">Home</a>
+        <!-- <a href="../index.html" class="hover:text-blue-400">Team</a> -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- 🔹 MAIN CONTENT -->
+  <main>
+    <section class="px-8 py-12 bg-white" id="news">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="mb-8 font-semibold text-blue-900 text-2xl text-center">
+          Supply Chain News &#x26; Updates
+        </h2>
+
+        <!-- 📰 News Card 1 -->
+        <div class="news-card bg-gray-50 rounded-xl overflow-hidden shadow-sm mb-8 transition transform hover:shadow-lg">
+          <img src="assets/News/1.jpg" alt="Container Ship" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-blue-900 mb-2">Global Container Rates Update</h3>
+            <p class="text-gray-700 mb-3">
+              Shanghai to Colombo freight rates decreased by 8% this week due to increased vessel capacity. Exporters are optimistic about continued stability in Q4 schedules.
+            </p>
+            <p class="text-gray-500 text-sm mb-4">Source: Freightwaves • 2 hours ago</p>
+            <a href="#" class="inline-block bg-blue-900 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-800 transition">
+              More Details →
+            </a>
+          </div>
+        </div>
+
+        <!-- 📰 News Card 2 -->
+        <div class="news-card bg-gray-50 rounded-xl overflow-hidden shadow-sm mb-8 transition transform hover:shadow-lg">
+          <img src="assets/news/2.jpg" alt="Logistics Partnership" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-blue-900 mb-2">New Forwarder Partnership</h3>
+            <p class="text-gray-700 mb-3">
+              Pacific Logistics has been onboarded as our primary air freight partner for ASEAN routes. This collaboration strengthens our regional air cargo efficiency.
+            </p>
+            <p class="text-gray-500 text-sm mb-4">Internal Update • 1 day ago</p>
+            <a href="#" class="inline-block bg-green-700 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition">
+              More Details →
+            </a>
+          </div>
+        </div>
+
+        <!-- 📰 News Card 3 -->
+        <div class="news-card bg-gray-50 rounded-xl overflow-hidden shadow-sm mb-8 transition transform hover:shadow-lg">
+          <img src="assets/news/3.jpg" alt="Port Congestion" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-blue-900 mb-2">Port Congestion Alert</h3>
+            <p class="text-gray-700 mb-3">
+              Singapore port is experiencing 2–3 day delays. Customers are advised to consider rerouting shipments via Port Klang to avoid disruption.
+            </p>
+            <p class="text-gray-500 text-sm mb-4">Source: Maritime Executive • 5 hours ago</p>
+            <a href="#" class="inline-block bg-amber-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-amber-500 transition">
+              More Details →
+            </a>
+          </div>
+        </div>
+
+        <!-- 📰 News Card 4 -->
+        <div class="news-card bg-gray-50 rounded-xl overflow-hidden shadow-sm mb-8 transition transform hover:shadow-lg">
+          <img src="assets/news/4.png" alt="Compliance Update" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-blue-900 mb-2">BOI Compliance Update</h3>
+            <p class="text-gray-700 mb-3">
+              New documentation requirements for BOI imports become effective February 1st. A virtual training session has been scheduled for all logistics teams.
+            </p>
+            <p class="text-gray-500 text-sm mb-4">Internal Memo • 3 days ago</p>
+            <a href="#" class="inline-block bg-purple-700 text-white px-5 py-2 rounded-lg shadow-md hover:bg-purple-600 transition">
+              More Details →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- 🔹 FIXED FOOTER -->
+  <footer class="bg-blue-900 text-gray-200 border-t border-blue-700">
+    <div class="max-w-7xl mx-auto px-6 py-4 text-center">
+      <p>© 2025 Searchline Commercial & Logistics Hub — All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Lucide Icons (optional) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
